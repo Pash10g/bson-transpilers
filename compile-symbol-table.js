@@ -58,7 +58,7 @@ const loadSymbolTable = (dir, inputLang, outputLang) => {
 const loadAll = () => {
   const dir = path.join(__dirname, 'lib', 'symbol-table');
   const inputLangs = ['javascript', 'shell', 'python'];
-  const outputLangs = ['java', 'shell', 'python', 'csharp', 'javascript', 'object'];
+  const outputLangs = ['java', 'shell', 'python', 'csharp', 'javascript', 'object', 'php'];
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }

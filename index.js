@@ -19,6 +19,7 @@ const getCodeGenerationVisitor = require('./codegeneration/CodeGenerationVisitor
 const getJavascriptVisitor = require('./codegeneration/javascript/Visitor');
 const getShellVisitor = require('./codegeneration/shell/Visitor');
 const getPythonVisitor = require('./codegeneration/python/Visitor');
+const getPhpVisitor = require('./codegeneration/php/Visitor');
 
 const getJavaGenerator = require('./codegeneration/java/Generator');
 const getPythonGenerator = require('./codegeneration/python/Generator');
@@ -26,25 +27,29 @@ const getCsharpGenerator = require('./codegeneration/csharp/Generator');
 const getShellGenerator = require('./codegeneration/shell/Generator');
 const getJavascriptGenerator = require('./codegeneration/javascript/Generator');
 const getObjectGenerator = require('./codegeneration/object/Generator');
+const getPhpGenerator = require('./codegeneration/php/Generator.js');
 
 const javascriptjavasymbols = require('./lib/symbol-table/javascripttojava');
 const javascriptpythonsymbols = require('./lib/symbol-table/javascripttopython');
 const javascriptcsharpsymbols = require('./lib/symbol-table/javascripttocsharp');
 const javascriptshellsymbols = require('./lib/symbol-table/javascripttoshell');
 const javascriptobjectsymbols = require('./lib/symbol-table/javascripttoobject');
+const javascriptphpsymbols = require('lib/symbol-table/javascripttophp');
+
 
 const shelljavasymbols = require('./lib/symbol-table/shelltojava');
 const shellpythonsymbols = require('./lib/symbol-table/shelltopython');
 const shellcsharpsymbols = require('./lib/symbol-table/shelltocsharp');
 const shelljavascriptsymbols = require('./lib/symbol-table/shelltojavascript');
 const shellobjectsymbols = require('./lib/symbol-table/shelltoobject');
+const shellphpymbols = require('./lib/symbol-table/shelltophp');
 
 const pythonjavasymbols = require('./lib/symbol-table/pythontojava');
 const pythonshellsymbols = require('./lib/symbol-table/pythontoshell');
 const pythoncsharpsymbols = require('./lib/symbol-table/pythontocsharp');
 const pythonjavascriptsymbols = require('./lib/symbol-table/pythontojavascript');
 const pythonobjectsymbols = require('./lib/symbol-table/pythontoobject');
-
+const pythonphpsymbols = require('./lib/symbol-table/pythontophp');
 /**
  * Constructs the parse tree from the JS or Shell code given by the user.
  *
@@ -180,6 +185,12 @@ module.exports = {
       getJavaGenerator,
       javascriptjavasymbols
     ),
+    php: getTranspiler(
+      loadJSTree,
+      getJavascriptVisitor(getCodeGenerationVisitor(JavascriptANTLRVisitor)),
+      getPhpGenerator,
+      javascriptphpsymbols
+    ),
     python: getTranspiler(
       loadJSTree,
       getJavascriptVisitor(getCodeGenerationVisitor(JavascriptANTLRVisitor)),
@@ -217,6 +228,12 @@ module.exports = {
       getShellVisitor(getJavascriptVisitor(getCodeGenerationVisitor(JavascriptANTLRVisitor))),
       getPythonGenerator,
       shellpythonsymbols
+    ),
+    php: getTranspiler(
+      loadJSTree,
+      getShellVisitor(getJavascriptVisitor(getCodeGenerationVisitor(JavascriptANTLRVisitor))),
+      getPhpGenerator,
+      shellphpsymbols
     ),
     csharp: getTranspiler(
       loadJSTree,
@@ -267,6 +284,12 @@ module.exports = {
       getPythonVisitor(getCodeGenerationVisitor(PythonANTLRVisitor)),
       getObjectGenerator,
       pythonobjectsymbols
+    ),
+    php: getTranspiler(
+      loadPyTree,
+      getPythonVisitor(getCodeGenerationVisitor(PythonANTLRVisitor)),
+      getPhpGenerator,
+      pythonphpsymbols
     )
   },
   getTree: {

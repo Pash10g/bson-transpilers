@@ -19,6 +19,7 @@ tests:
           csharp: "new BsonDocument(\"x\", \"1\")"
           shell: "{\n  'x': '1'\n}"
           object: "{x: '1'}"
+          php: "(object)['x' => '1']"
     - input:
           javascript: "{x: '1',}"
           shell: "{x: '1',}"
@@ -1083,4 +1084,3 @@ tests:
           csharp: "new Regex(\"ab+c\")"
           shell: "new RegExp('ab+c', 'u')"
           object: "new RegExp('ab+c', 'u')"
-
